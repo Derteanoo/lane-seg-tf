@@ -48,4 +48,5 @@ flags.DEFINE_boolean('is_scratch', True, 'training from scratch or not')
 flags.DEFINE_boolean('is_write_pb', False, 'save pb or not when testing')
 
 cfg = tf.app.flags.FLAGS
+
 # tf.logging.set_verbosity(tf.logging.INFO)

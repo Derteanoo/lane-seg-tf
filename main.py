@@ -18,7 +18,8 @@ def train(result, model, logdir, train_sum_freq, val_sum_freq, save_freq, models
 	
 	num_val_batch = len(result["val"]) // model.batch_size
 	step = 0
-	config = tf.ConfigProto()
+	#config = tf.ConfigProto()
+	config = tf.ConfigProto(gpu_options=tf.GPUOptions(allow_growth=True))
 	config.gpu_options.allow_growth = True
 	
 	with tf.Session(config=config, graph=model.graph) as sess:
@@ -35,7 +36,6 @@ def train(result, model, logdir, train_sum_freq, val_sum_freq, save_freq, models
 		
 		start = time.time()
 		for global_step in range(model.max_iter):
-			
 			print("Training for iter %d/%d: " % (global_step, model.max_iter))
 			fd.write("Training for iter %d/%d: \n" % (global_step, model.max_iter))
 
@@ -91,7 +91,8 @@ def train(result, model, logdir, train_sum_freq, val_sum_freq, save_freq, models
 def test(result, model, models, test_outputs):
 	num_te_batch = int(math.ceil(float(len(result["test"]) / model.batch_size)))
 	idx = 0
-	config = tf.ConfigProto()
+	#config = tf.ConfigProto()
+	config = tf.ConfigProto(gpu_options=tf.GPUOptions(allow_growth=True))
 	config.gpu_options.allow_growth = True
 	
 	with tf.Session(config=config, graph=model.graph) as sess:
@@ -123,7 +124,6 @@ def test(result, model, models, test_outputs):
 		print("All results have been saved.")
 
 def main(_):
-
 	# get dataset info
 	result = create_image_lists(cfg.images)
 	max_iters = len(result["train"]) * cfg.epoch // cfg.batch_size
@@ -131,9 +131,8 @@ def main(_):
 	model = UNet(max_iters, batch_size=cfg.batch_size, init_lr=cfg.init_lr, power=cfg.power, momentum=cfg.momentum, stddev=cfg.stddev, \
 		 regularization_scale=cfg.regularization_scale, alpha=cfg.alpha, gamma=cfg.gamma, fl_weight=cfg.fl_weight)
 	tf.logging.info('Graph loaded.')
-
+	
 	if cfg.is_training:
-
 		if not tf.gfile.Exists(cfg.logdir):
 			
 			tf.gfile.MakeDirs(cfg.logdir)
@@ -155,7 +154,6 @@ def main(_):
 		fd.close()
 	
 	else:
-
 		if not tf.gfile.Exists(cfg.test_outputs):
 			
 			tf.gfile.MakeDirs(cfg.test_outputs)
