@@ -1,3 +1,3 @@
 # lane-seg-tf
-lane segmentation tensorflow
+lane segmentation with tensorflow
 support Quantization Aware Training
