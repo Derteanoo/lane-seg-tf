@@ -117,7 +117,11 @@ class UNet(object):
 				self.lr = tf.train.polynomial_decay(self.init_lr, self.global_iter, self.max_iter, end_learning_rate=1e-8, power=self.power)
 				#self.optimizer = tf.train.MomentumOptimizer(self.lr, self.momentum)
 				self.optimizer = tf.train.AdamOptimizer(self.lr, cfg.beta1, cfg.beta2)
-
+				update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+				with tf.control_dependencies(update_ops):
+					updates = tf.group(*update_ops)
+					self.train_op = self.optimizer.minimize(self.total_loss, global_step=self.global_iter)
+				'''
 				self.train_op = slim.learning.create_train_op(self.total_loss,
                                                       self.optimizer,
                                                       global_step=self.global_iter)
@@ -125,6 +129,7 @@ class UNet(object):
 				with tf.control_dependencies(update_ops):
 					updates = tf.group(*update_ops)
 					self.train_op = control_flow_ops.with_dependencies([updates], self.train_op)
+				'''
 				'''
 				var_list = tf.trainable_variables()
 				g_list = tf.global_variables()

@@ -15,8 +15,8 @@ flags.DEFINE_float('gamma', 2.0, 'factor for focal loss')
 flags.DEFINE_float('fl_weight', 0.1, 'regularization coefficient for focal loss')
 
 # For training
-flags.DEFINE_integer('batch_size', 32, 'batch size')
-flags.DEFINE_integer('epoch', 400, 'epoch')
+flags.DEFINE_integer('batch_size', 1, 'batch size')
+flags.DEFINE_integer('epoch', 50, 'epoch')
 
 flags.DEFINE_float('init_lr', 0.005, 'initial learning rate')
 flags.DEFINE_float('beta1', 0.5, 'exponential decay rate of the first moment of adam learning rate')
@@ -43,9 +43,9 @@ flags.DEFINE_integer('val_sum_freq', 50, 'the frequency of saving valuation summ
 flags.DEFINE_integer('save_freq', 5, 'the frequency of saving model(step)')
 flags.DEFINE_string('models', 'models', 'path for saving models')
 flags.DEFINE_string('test_outputs', 'test-outputs', 'path for saving test results')
-flags.DEFINE_boolean('is_quantize', False, 'quantize training or not')
+flags.DEFINE_boolean('is_quantize', True, 'quantize training or not')
 flags.DEFINE_boolean('is_scratch', True, 'training from scratch or not')
-flags.DEFINE_boolean('is_write_pb', False, 'save pb or not when testing')
+flags.DEFINE_boolean('is_write_pb', True, 'save pb or not when testing')
 
 cfg = tf.app.flags.FLAGS
 
