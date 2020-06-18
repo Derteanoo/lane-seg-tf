@@ -102,7 +102,7 @@ def test(result, model, models, test_outputs):
 		print("Test phase: ")
 		
 		if cfg.is_write_pb:
-			constant_graph = graph_util.convert_variables_to_constants(sess, sess.graph_def,['unet/conv_output/Conv2D'])
+			constant_graph = graph_util.convert_variables_to_constants(sess, sess.graph_def,['unet/conv_output'])
 			with tf.gfile.FastGFile('./models/quant_unet_model.pb', mode='wb') as f:
 				f.write(constant_graph.SerializeToString())
 
