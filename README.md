@@ -6,6 +6,8 @@ support Quantization Aware Training
 
 This repository contains some models for lane semantic segmentation and the pipeline of training and testing models, implemented in Tensorflow.
 
+![picc](https://github.com/Derteanoo/lane-segmentation/blob/master/stargan/results/28_fake.png?raw=true)
+
 ## Datasets
 We train and test the model on our own dataset in the same format as the Tusimple dataset. You need to generate instance segmentation labels first.
 
